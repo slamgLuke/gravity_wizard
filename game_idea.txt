@@ -1,0 +1,11 @@
+rust game idea:
+
+- 2d platformer
+- pixel art style
+- gravity flipping instead of jumping (like gravity guy maybe)
+- gravity doesnt only affect player, but objects in the environment as well
+- free movement (unlike gravity guy)
+- scene scrolling
+
+name ideas:
+gravity_wizard
