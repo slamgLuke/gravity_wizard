@@ -26,7 +26,7 @@ const WIZARD_SHAPE: Vec2 = Vec2::new(WIZARD_SIZE, WIZARD_SIZE);
 
 const ACCELERATION: f32 = 8.0;
 const MAX_HORIZONTAL_VELOCITY: f32 = 250.0;
-const MAX_VERTICAL_VELOCITY: f32 = 500.0;
+const MAX_VERTICAL_VELOCITY: f32 = 980.0;
 
 #[derive(Component)]
 struct Wizard;
@@ -36,6 +36,14 @@ struct Wizard;
 struct Velocity {
     x: f32,
     y: f32,
+}
+
+#[derive(Component)]
+struct Platform {
+    lowx: f32,
+    highx: f32,
+    lowy: f32,
+    highy: f32,
 }
 
 fn setup(mut commands: Commands, window_query: Query<&Window, With<PrimaryWindow>>) {
@@ -56,6 +64,32 @@ fn setup(mut commands: Commands, window_query: Query<&Window, With<PrimaryWindow
         },
         Wizard,
         Velocity { x: 0.0, y: 0.0 },
+    ));
+    spawn_platform(
+        commands,
+        Platform {
+            lowx: 50.0,
+            highx: 150.0,
+            lowy: 40.0,
+            highy: 45.0,
+        },
+    );
+}
+
+fn spawn_platform(mut commands: Commands, platform: Platform) {
+    let x = platform.lowx + platform.highx / 2.0;
+    let y = platform.lowy + platform.highy / 2.0;
+    commands.spawn((
+        SpriteBundle {
+            sprite: Sprite {
+                color: Color::rgb(0.0, 0.0, 0.0),
+                custom_size: Some(Vec2::new(90.0, 3.0)),
+                ..default()
+            },
+            transform: Transform::from_xyz(x, y, 0.0),
+            ..default()
+        },
+        platform,
     ));
 }
 
