@@ -9,3 +9,13 @@ rust game idea:
 
 name ideas:
 gravity_wizard
+
+todo!():
+- change wizard color when gravity is flipped/(when midair?)
+- level data reader
+- win exit
+- moving objects
+- keys/doors
+- enemies
+- level browser/level toggle
+- main menu
