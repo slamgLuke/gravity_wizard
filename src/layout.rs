@@ -54,7 +54,7 @@ pub fn level_data_reader(path: String, mut commands: Commands) {
     let platforms = level_data[1].split(",").collect::<Vec<&str>>();
     let mut platforms_vec = Vec::new();
     for line in platforms.iter() {
-        let line = line.split(" ").collect::<Vec<&str>>();
+        let line = line.trim().split(" ").collect::<Vec<&str>>();
         if line == vec!["NULL"] {
             break;
         }
@@ -69,7 +69,7 @@ pub fn level_data_reader(path: String, mut commands: Commands) {
     let objects = level_data[2].split(",").collect::<Vec<&str>>();
     let mut objects_vec = Vec::new();
     for line in objects.iter() {
-        let line = line.split(" ").collect::<Vec<&str>>();
+        let line = line.trim().split(" ").collect::<Vec<&str>>();
         if line == vec!["NULL"] {
             break;
         }
@@ -80,7 +80,7 @@ pub fn level_data_reader(path: String, mut commands: Commands) {
             highy: line[3].parse::<f32>().unwrap(),
         });
     }
-    let exit_vec = level_data[3].split(" ").collect::<Vec<&str>>();
+    let exit_vec = level_data[3].trim().split(" ").collect::<Vec<&str>>();
 
     // spawning
     for platform in platforms_vec {
