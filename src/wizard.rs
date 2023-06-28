@@ -1,5 +1,6 @@
 // wizard.rs
 
+use crate::layout::*;
 use crate::physics::*;
 use bevy::{prelude::*, window::PrimaryWindow};
 
@@ -90,6 +91,15 @@ pub fn spawn_wizard(
             height: WIZARD_SIZE,
         },
     ));
+}
+
+pub fn set_active_color(mut wizard_sprite_query: Query<&mut Sprite, With<Wizard>>) {
+    let mut wizard_sprite = wizard_sprite_query.single_mut();
+    wizard_sprite.color = WIZARD_COLOR_ACTIVE;
+}
+pub fn set_passive_color(mut wizard_sprite_query: Query<&mut Sprite, With<Wizard>>) {
+    let mut wizard_sprite = wizard_sprite_query.single_mut();
+    wizard_sprite.color = WIZARD_COLOR_PASSIVE;
 }
 
 pub fn despawn_wizard(mut commands: Commands, wizard_query: Query<Entity, With<Wizard>>) {

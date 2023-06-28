@@ -1,6 +1,7 @@
 // physics.rs
 
-use crate::platform::Platform;
+use crate::layout::*;
+use crate::wizard::*;
 use bevy::prelude::*;
 
 pub enum GravityDirection {
@@ -13,7 +14,7 @@ pub const GRAVITY: f32 = 9.8 * 1.5;
 #[derive(Resource)]
 pub struct Gravity(pub GravityDirection);
 
-pub const HORIZONTAL_ACCELERATION: f32 = 8.0;
+pub const HORIZONTAL_ACCELERATION: f32 = 4.0;
 pub const MAX_HORIZONTAL_VELOCITY: f32 = 250.0;
 pub const MAX_VERTICAL_VELOCITY: f32 = 980.0;
 
@@ -84,6 +85,7 @@ pub fn platform_collision(
             let left = highx <= platform.lowx;
             let right = lowx >= platform.highx;
 
+            // collision from above
             if above && !right && !left && lowy + velocity.y * time.delta_seconds() < platform.highy
             {
                 velocity.y = 0.0;
@@ -95,6 +97,7 @@ pub fn platform_collision(
                 velocity.y = 0.0;
             }
 
+            // collision from the sides
             if left && !above && !below && highx + velocity.x * time.delta_seconds() > platform.lowx
             {
                 velocity.x = 0.0;
@@ -103,6 +106,33 @@ pub fn platform_collision(
                 && !below
                 && lowx + velocity.x * time.delta_seconds() < platform.highx
             {
+                velocity.x = 0.0;
+            }
+
+            // rare case: collision from the corners
+            if (above && left)
+                && lowy + velocity.y * time.delta_seconds() < platform.highy
+                && highx + velocity.x * time.delta_seconds() > platform.lowx
+            {
+                velocity.y = 0.0;
+                velocity.x = 0.0;
+            } else if (above && right)
+                && lowy + velocity.y * time.delta_seconds() < platform.highy
+                && lowx + velocity.x * time.delta_seconds() < platform.highx
+            {
+                velocity.y = 0.0;
+                velocity.x = 0.0;
+            } else if (below && left)
+                && highy + velocity.y * time.delta_seconds() > platform.lowy
+                && highx + velocity.x * time.delta_seconds() > platform.lowx
+            {
+                velocity.y = 0.0;
+                velocity.x = 0.0;
+            } else if (below && right)
+                && highy + velocity.y * time.delta_seconds() > platform.lowy
+                && lowx + velocity.x * time.delta_seconds() < platform.highx
+            {
+                velocity.y = 0.0;
                 velocity.x = 0.0;
             }
         }

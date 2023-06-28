@@ -3,12 +3,12 @@
 // Author: slamgLuke
 // A Bevy game.
 
+mod layout;
 mod physics;
-mod platform;
 mod wizard;
 
+use crate::layout::*;
 use crate::physics::*;
-use crate::platform::*;
 use crate::wizard::*;
 use bevy::{
     prelude::*,
@@ -30,12 +30,15 @@ fn main() {
             )
                 .chain(),
         )
+        .add_system(set_active_color.run_if(in_air))
+        .add_system(set_passive_color.run_if(not(in_air)))
         .add_system(flip_gravity.run_if(not(in_air)))
         .add_systems(
             (despawn_wizard, spawn_wizard)
                 .chain()
                 .distributive_run_if(out_of_screen),
         )
+        .add_system(clear_level.run_if(is_in_exit))
         .run();
 }
 
@@ -79,32 +82,5 @@ fn setup(mut commands: Commands, mut window_query: Query<&mut Window, With<Prima
             ..Default::default()
         });
     }
-
-    let platforms = vec![
-        Platform {
-            lowx: 0.0,
-            highx: 300.0,
-            lowy: 0.0,
-            highy: 100.0,
-        },
-        Platform {
-            lowx: 400.0,
-            highx: 600.0,
-            lowy: 500.0,
-            highy: 550.0,
-        },
-        Platform {
-            lowx: 690.0,
-            highx: 1100.0,
-            lowy: 590.0,
-            highy: 599.0,
-        },
-        Platform {
-            lowx: 1000.0,
-            highx: window.width(),
-            lowy: window.height() - 100.0,
-            highy: window.height() - 50.0,
-        },
-    ];
-    spawn_platforms(commands, platforms);
+    level_data_reader("levels/1.txt".into(), commands);
 }
