@@ -11,10 +11,10 @@ name ideas:
 gravity_wizard
 
 todo!():
-- change wizard color when gravity is flipped/(when midair?)
-- level data reader
-- win exit
-- moving objects
+- change wizard color when gravity is flipped/(when midair?) - done!
+- level data reader - done!
+- win exit - done!
+- moving objects - doing!
 - keys/doors
 - enemies
 - level browser/level toggle

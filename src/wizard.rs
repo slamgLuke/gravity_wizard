@@ -1,12 +1,14 @@
+#[allow(unused_imports)]
+//
 // wizard.rs
-
+//
 use crate::layout::*;
 use crate::physics::*;
 use bevy::{prelude::*, window::PrimaryWindow};
 
 pub const WIZARD_SIZE: f32 = 20.0;
 pub const WIZARD_COLOR_ACTIVE: Color = Color::rgb(0.0, 0.0, 1.0);
-pub const WIZARD_COLOR_PASSIVE: Color = Color::rgb(0.0, 0.0, 0.0);
+pub const WIZARD_COLOR_PASSIVE: Color = Color::rgb(1.0, 0.0, 0.0);
 pub const WIZARD_SHAPE: Vec2 = Vec2::new(WIZARD_SIZE, WIZARD_SIZE);
 
 #[derive(Component)]

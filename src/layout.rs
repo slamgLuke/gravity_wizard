@@ -1,5 +1,7 @@
+#[allow(unused_imports)]
+//
 // platform.rs
-
+//
 use crate::physics::*;
 use crate::wizard::Wizard;
 use bevy::prelude::*;
@@ -32,6 +34,9 @@ pub fn is_in_exit(
     let exit = exit_query.single();
     (exit.x - translation.x).abs() < EXIT_MARGIN && (exit.y - translation.y).abs() < EXIT_MARGIN
 }
+
+#[derive(Component)]
+pub struct Object;
 
 #[derive(Component)]
 pub struct DeathZone;
@@ -117,6 +122,11 @@ pub fn level_data_reader(path: String, mut commands: Commands) {
                 },
                 transform: Transform::from_xyz(x, y, 0.0),
                 ..default()
+            },
+            Velocity { x: 0.0, y: 0.0 },
+            EntitySize {
+                width: object.highx - object.lowx,
+                height: object.highy - object.lowy,
             },
             object,
         ));

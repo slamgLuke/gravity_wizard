@@ -28,13 +28,14 @@ fn main() {
                 wizard_input,
                 gravitational_pull,
                 platform_collision,
+                object_collision,
                 apply_movement,
                 debug_wizard,
             )
                 .chain(),
         )
-        .add_system(set_active_color.run_if(in_air))
-        .add_system(set_passive_color.run_if(not(in_air)))
+        .add_system(set_active_color.run_if(not(in_air)))
+        .add_system(set_passive_color.run_if(in_air))
         .add_system(flip_gravity.run_if(not(in_air)))
         .add_systems(
             (despawn_wizard, spawn_wizard)
